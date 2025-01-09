@@ -1,10 +1,3 @@
-//
-//  SceneDelegate.swift
-//  Reminder
-//
-//  Created by Egito Filho on 19/12/24.
-//
-
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
