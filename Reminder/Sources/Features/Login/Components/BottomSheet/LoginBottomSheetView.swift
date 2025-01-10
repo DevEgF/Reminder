@@ -56,6 +56,7 @@ class LoginBottomSheetView: UIView {
         self.backgroundColor = .white
         self.layer.cornerRadius = Metrics.small
         
+        addSubview(handleArea)
         addSubview(titleLabel)
         addSubview(emailTextField)
         addSubview(passwotdTextField)

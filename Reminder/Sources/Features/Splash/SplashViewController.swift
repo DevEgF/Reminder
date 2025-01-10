@@ -7,6 +7,7 @@ class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        setupGesture()
     }
     
     private func setup () {
@@ -25,5 +26,21 @@ class SplashViewController: UIViewController {
         ])
         
         contentView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func setupGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showLoginBottomSheet))
+        
+        self.view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc
+    private func showLoginBottomSheet() {
+        let bottomSheet = LoginBottomSheetViewController()
+        bottomSheet.modalPresentationStyle = .overCurrentContext
+        bottomSheet.modalTransitionStyle = .crossDissolve
+        self.present(bottomSheet, animated: false) {
+            bottomSheet.animateShow()
+        }
     }
 }
