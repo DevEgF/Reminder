@@ -1,0 +1,5 @@
+/* MARK: - Login Screen*/
+"label.title" = "Entrar para acessar suas receitas";
+"email.placeholder" = "email@exemplo.com";
+"password.placeholder" = "Senha";
+"button.title" = "Entrar";
