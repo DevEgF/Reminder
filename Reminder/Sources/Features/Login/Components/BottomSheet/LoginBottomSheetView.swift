@@ -14,6 +14,7 @@ class LoginBottomSheetView: UIView {
     private let loginTextFielLabel: UILabel = {
         let label = UILabel()
         label.text = "login.loginText.label.title".localized
+        label.font = Typography.body
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -27,6 +28,7 @@ class LoginBottomSheetView: UIView {
     private let passwordTextFielLabel: UILabel = {
         let label = UILabel()
         label.text = "login.passwordText.label.title".localized
+        label.font = Typography.body
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -79,18 +81,18 @@ class LoginBottomSheetView: UIView {
             titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: Metrics.medium),
             titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.medium),
             
-            loginTextFielLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Metrics.medium),
+            loginTextFielLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Metrics.huge),
             loginTextFielLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.medium),
             
-            emailTextField.topAnchor.constraint(equalTo: loginTextFielLabel.bottomAnchor, constant: Metrics.medium),
+            emailTextField.topAnchor.constraint(equalTo: loginTextFielLabel.bottomAnchor, constant: Metrics.little),
             emailTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.medium),
             emailTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.medium),
             emailTextField.heightAnchor.constraint(equalToConstant: Metrics.inputSize),
             
-            passwordTextFielLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: Metrics.medium),
+            passwordTextFielLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: Metrics.huge),
             passwordTextFielLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.medium),
             
-            passwordTextField.topAnchor.constraint(equalTo: passwordTextFielLabel.bottomAnchor, constant: Metrics.medium),
+            passwordTextField.topAnchor.constraint(equalTo: passwordTextFielLabel.bottomAnchor, constant: Metrics.little),
             passwordTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.medium),
             passwordTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.medium),
             passwordTextField.heightAnchor.constraint(equalToConstant: Metrics.inputSize),
