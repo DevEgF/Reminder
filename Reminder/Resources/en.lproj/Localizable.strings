@@ -3,3 +3,5 @@
 "email.placeholder" = "email@exemplo.com";
 "password.placeholder" = "Senha";
 "button.title" = "Entrar";
+"login.loginText.label.title" = "E-mail";
+"login.passwordText.label.title" = "Senha";
