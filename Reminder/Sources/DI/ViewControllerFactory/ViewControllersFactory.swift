@@ -8,7 +8,7 @@ final class ViewControllersFactory: ViewControllersFactoryProtocol {
         return splashViewController
     }
     
-    func makeLoginBottomSheetViewController(flowDelegate: LoginBottomSheetFlowDelegate) -> LoginBottomSheetViewController {
+    func makeLoginBottomSheetController(flowDelegate: any LoginBottomSheetFlowDelegate) -> LoginBottomSheetViewController {
         let contentView = LoginBottomSheetView()
         let loginViewController = LoginBottomSheetViewController(contentView: contentView, delegate: flowDelegate)
         return loginViewController
