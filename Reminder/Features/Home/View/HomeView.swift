@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 
 class HomeView: UIView {
+    weak public var delegate: HomeViewDelegate?
     
     let profileBackground: UIView = {
         let view = UIView()
@@ -24,7 +25,9 @@ class HomeView: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = Metrics.huge
+        imageView.isUserInteractionEnabled = true
+        imageView.image = .user
+        imageView.layer.cornerRadius = Metrics.medium
         return imageView
     }()
     
@@ -58,7 +61,6 @@ class HomeView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
-        self.backgroundColor = .gray
     }
     
     required init?(coder: NSCoder) {
@@ -74,6 +76,19 @@ class HomeView: UIView {
         addSubview(contentBackground)
         contentBackground.addSubview(feedbackButton)
         setupConstraints()
+        setupImageGesture()
+    }
+    
+    private func setupImageGesture() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self,
+                                                          action: #selector(profileImageTapped))
+    
+        profileImage.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc
+    private func profileImageTapped() {
+        delegate?.didTapProfileImage()
     }
     
     private func setupConstraints() {
@@ -83,7 +98,7 @@ class HomeView: UIView {
             profileBackground.trailingAnchor.constraint(equalTo: trailingAnchor),
             profileBackground.heightAnchor.constraint(equalToConstant: Metrics.backgroundProfileSize),
             
-            profileImage.topAnchor.constraint(equalTo: profileBackground.topAnchor, constant: Metrics.huge),
+            profileImage.topAnchor.constraint(equalTo: profileBackground.topAnchor, constant: Metrics.veryHuge),
             profileImage.leadingAnchor.constraint(equalTo: profileBackground.leadingAnchor, constant: Metrics.medium),
             profileImage.heightAnchor.constraint(equalToConstant: Metrics.profileImageSize),
             profileImage.widthAnchor.constraint(equalToConstant: Metrics.profileImageSize),

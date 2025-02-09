@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 
 public struct Metrics {
+    static let veryHuge: CGFloat = 150
     static let inputSize: CGFloat = 56
     static let buttonSize: CGFloat = 56
     static let huge: CGFloat = 48
