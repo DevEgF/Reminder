@@ -9,3 +9,4 @@
 /* MARK: - Home Screen*/
 "home.welcome.label" = "Boas Vindas";
 "home.feedback.button.title" = "Avaliar";
+"home.name.placeholder" = "Insira seu nome";

@@ -4,6 +4,7 @@ import UIKit
 class HomeViewController: UIViewController {
     let contentView: HomeView
     let flowDelegate: HomeFlowDelegate
+    let viewModel: HomeViewModel
     
     init(
         contentView: HomeView,
@@ -11,6 +12,7 @@ class HomeViewController: UIViewController {
     ) {
         self.contentView = contentView
         self.flowDelegate = flowDelegate
+        self.viewModel = HomeViewModel()
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -22,6 +24,16 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         setup()
         setupNavigationBar()
+        checkForExistingData()
+    }
+    
+    private func checkForExistingData() {
+        if let user = UserDefaultManager.loadUser() {
+            contentView.nameTextField.text = UserDefaultManager.loadUserName()
+        }
+        if let savedImage = UserDefaultManager.loadProfileImage() {
+            contentView.profileImage.image = savedImage
+        }
     }
 
     private func setup() {
@@ -44,7 +56,6 @@ class HomeViewController: UIViewController {
         navigationItem.rightBarButtonItem = barButton
     }
 
-    
     @objc
     private func logoutAction() {
         UserDefaultManager.removeUser()
@@ -74,8 +85,10 @@ extension HomeViewController: UIImagePickerControllerDelegate, UINavigationContr
     internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let editedImage = info[.editedImage] as? UIImage {
             contentView.profileImage.image = editedImage
+            UserDefaultManager.saveProfileImage(image: editedImage)
         } else if let originalImage = info[.originalImage] as? UIImage {
             contentView.profileImage.image = originalImage
+            UserDefaultManager.saveProfileImage(image: originalImage)
         }
         
         dismiss(animated: true)

@@ -26,7 +26,6 @@ class HomeView: UIView {
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.isUserInteractionEnabled = true
-        imageView.image = .user
         imageView.layer.cornerRadius = Metrics.medium
         return imageView
     }()
@@ -40,12 +39,14 @@ class HomeView: UIView {
         return label
     }()
     
-    let nameLabel: UILabel = {
-        let label = UILabel()
-        label.font = Typography.heading
-        label.textColor = Colors.gray100
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    let nameTextField: UITextField = {
+        let textField = UITextField()
+        textField.font = Typography.heading
+        textField.textColor = Colors.gray100
+        textField.returnKeyType = .done
+        textField.placeholder = "home.name.placeholder".localized
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
     }()
     
     let feedbackButton: UIButton = {
@@ -61,6 +62,7 @@ class HomeView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        setupTextField()
     }
     
     required init?(coder: NSCoder) {
@@ -71,7 +73,7 @@ class HomeView: UIView {
         addSubview(profileBackground)
         profileBackground.addSubview(profileImage)
         profileBackground.addSubview(welcomeLabel)
-        profileBackground.addSubview(nameLabel)
+        profileBackground.addSubview(nameTextField)
         
         addSubview(contentBackground)
         contentBackground.addSubview(feedbackButton)
@@ -91,6 +93,17 @@ class HomeView: UIView {
         delegate?.didTapProfileImage()
     }
     
+    private func setupTextField() {
+        nameTextField.addTarget(self, action: #selector(nameTextFieldDidEndEditing), for: .editingDidEnd)
+        nameTextField.delegate = self
+    }
+    
+    @objc
+    private func nameTextFieldDidEndEditing() {
+        let userName = nameTextField.text ?? ""
+        UserDefaultManager.saveUserName(name: userName)
+    }
+    
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             profileBackground.topAnchor.constraint(equalTo: topAnchor, constant: safeAreaInsets.top),
@@ -106,10 +119,10 @@ class HomeView: UIView {
             welcomeLabel.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: Metrics.small),
             welcomeLabel.leadingAnchor.constraint(equalTo: profileImage.leadingAnchor),
             
-            nameLabel.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: Metrics.little),
-            nameLabel.leadingAnchor.constraint(equalTo: welcomeLabel.leadingAnchor),
+            nameTextField.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: Metrics.little),
+            nameTextField.leadingAnchor.constraint(equalTo: welcomeLabel.leadingAnchor),
             
-            contentBackground.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: Metrics.huge),
+            contentBackground.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: Metrics.huge),
             contentBackground.leadingAnchor.constraint(equalTo: leadingAnchor),
             contentBackground.trailingAnchor.constraint(equalTo: trailingAnchor),
             contentBackground.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -119,5 +132,14 @@ class HomeView: UIView {
             feedbackButton.trailingAnchor.constraint(equalTo: contentBackground.trailingAnchor, constant: -Metrics.medium),
             feedbackButton.heightAnchor.constraint(equalToConstant: Metrics.buttonSize)
         ])
+    }
+}
+
+extension HomeView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        let userName = nameTextField.text ?? ""
+        UserDefaultManager.saveUserName(name: userName)
+        return true
     }
 }
