@@ -47,5 +47,15 @@ extension ReminderFlowController: SplashFlowDelegate {
 
 //MARK: - Home
 extension ReminderFlowController: HomeFlowDelegate {
+    func logout() {
+        self.navigationController?.popViewController(animated: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.openLoginBottomSheet()
+        }
+    }
 
+    func navigateToRecipes() {
+        //
+    }
 }

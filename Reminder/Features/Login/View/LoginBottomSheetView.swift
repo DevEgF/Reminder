@@ -1,6 +1,9 @@
 import Foundation
 import UIKit
 
+import Foundation
+import UIKit
+
 class LoginBottomSheetView: UIView {
     public weak var delegate: LoginBottonSheetViewDelegate?
     
@@ -11,6 +14,7 @@ class LoginBottomSheetView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     private let loginTextFielLabel: UILabel = {
         let label = UILabel()
         label.text = "login.loginText.label.title".localized
@@ -18,6 +22,7 @@ class LoginBottomSheetView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     private let emailTextField: UITextField = {
         let text = UITextField()
         text.placeholder = "email.placeholder".localized
@@ -25,6 +30,7 @@ class LoginBottomSheetView: UIView {
         text.translatesAutoresizingMaskIntoConstraints = false
         return text
     }()
+    
     private let passwordTextFielLabel: UILabel = {
         let label = UILabel()
         label.text = "login.passwordText.label.title".localized
@@ -32,6 +38,7 @@ class LoginBottomSheetView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     private let passwordTextField: UITextField = {
         let text = UITextField()
         text.placeholder = "password.placeholder".localized
@@ -53,11 +60,19 @@ class LoginBottomSheetView: UIView {
         return button
     }()
     
+    private let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.hidesWhenStopped = true
+        indicator.color = .white
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setupUI()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -72,6 +87,7 @@ class LoginBottomSheetView: UIView {
         addSubview(passwordTextFielLabel)
         addSubview(passwordTextField)
         addSubview(loginButton)
+        loginButton.addSubview(activityIndicator)
         
         setupConstraints()
     }
@@ -97,10 +113,13 @@ class LoginBottomSheetView: UIView {
             passwordTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.medium),
             passwordTextField.heightAnchor.constraint(equalToConstant: Metrics.inputSize),
             
-            loginButton.topAnchor.constraint(equalTo: self.bottomAnchor, constant: -96),
+            loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: Metrics.medium),
             loginButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.medium),
             loginButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.medium),
-            loginButton.heightAnchor.constraint(equalToConstant: Metrics.buttonSize)
+            loginButton.heightAnchor.constraint(equalToConstant: Metrics.buttonSize),
+            
+            activityIndicator.centerXAnchor.constraint(equalTo: loginButton.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: loginButton.centerYAnchor)
         ])
     }
     
@@ -109,5 +128,17 @@ class LoginBottomSheetView: UIView {
         let password = passwordTextField.text ?? ""
         guard let user = emailTextField.text else { return }
         delegate?.sendLoginData(user: user, password: password)
+    }
+    
+    public func setLoading(_ isLoading: Bool) {
+        if isLoading {
+            loginButton.setTitle("", for: .normal)
+            activityIndicator.startAnimating()
+            loginButton.isUserInteractionEnabled = false
+        } else {
+            loginButton.setTitle("button.title".localized, for: .normal)
+            activityIndicator.stopAnimating()
+            loginButton.isUserInteractionEnabled = true
+        }
     }
 }

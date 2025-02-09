@@ -21,11 +21,33 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        setupNavigationBar()
     }
 
     private func setup() {
         view.addSubview(contentView)
+        view.backgroundColor = Colors.gray600
         buildHierarchy()
+    }
+    
+    private func setupNavigationBar() {
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationItem.hidesBackButton = true
+        
+        let logoutButton = UIButton(type: .system)
+        logoutButton.setImage(.logOutIcon, for: .normal)
+        logoutButton.tintColor = Colors.primaryRedBase
+        logoutButton.addTarget(self, action: #selector(logoutAction), for: .touchUpInside)
+        
+        let barButton = UIBarButtonItem(customView: logoutButton)
+        navigationItem.rightBarButtonItem = barButton
+    }
+
+    
+    @objc
+    private func logoutAction() {
+        UserDefaultManager.removeUser()
+        self.flowDelegate.logout()
     }
     
     private func buildHierarchy() {

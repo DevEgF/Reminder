@@ -22,7 +22,6 @@ class LoginBottomSheetViewController: UIViewController {
         
         contentView.delegate = self
         setupUI()
-        setupGesture()
         bindViewModel()
     }
     
@@ -43,12 +42,22 @@ class LoginBottomSheetViewController: UIViewController {
     }
     
     private func bindViewModel() {
-        viewModel.successResult = { [weak self] userNameLogin in
-            self?.presentSaveLoginAlert(email: userNameLogin)
+        viewModel.isLoading = { [weak self] isLoading in
+            DispatchQueue.main.async {
+                self?.contentView.setLoading(isLoading)
+            }
         }
-        
+
+        viewModel.successResult = { [weak self] userNameLogin in
+            DispatchQueue.main.async {
+                self?.presentSaveLoginAlert(email: userNameLogin)
+            }
+        }
+
         viewModel.errorResult = { [weak self] errorMessage in
-            self?.presentErrorAlert(message: errorMessage)
+            DispatchQueue.main.async {
+                self?.presentErrorAlert(message: errorMessage)
+            }
         }
     }
     
@@ -79,14 +88,6 @@ class LoginBottomSheetViewController: UIViewController {
         alertController.addAction(cancel)
         self.present(alertController, animated: true)
     }
-    
-    private func setupGesture() {
-        //
-    }
-    
-    private func handlePanGesture() {
-        //
-    }
 
     func animateShow(completion: (() -> Void)? = nil) {
         self.view.layoutIfNeeded()
@@ -102,6 +103,7 @@ class LoginBottomSheetViewController: UIViewController {
 
 extension LoginBottomSheetViewController: LoginBottonSheetViewDelegate {
     func sendLoginData(user: String, password: String) {
+        bindViewModel()
         viewModel.doAuth(userNameLogin: user, password: password)
     }
 }
