@@ -10,3 +10,7 @@
 "home.welcome.label" = "Boas Vindas";
 "home.feedback.button.title" = "Avaliar";
 "home.name.placeholder" = "Insira seu nome";
+"home.prescription.title" = "Minhas receitas";
+"home.prescription.subtitle" = "Acompanhe os medicamentos e gerencie lembretes";
+"home.new.prescription.title" = "Nova receita";
+"home.new.prescription.subtitle" = "Cadastre novos lembretes de \nreceitas";

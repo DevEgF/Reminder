@@ -59,6 +59,26 @@ class HomeView: UIView {
         return button
     }()
     
+    let myPrescriptionButton: ButtonHomeViewComponent = {
+        let button = ButtonHomeViewComponent(
+            icon: .paper,
+            title: "home.prescription.title".localized,
+            description: "home.prescription.subtitle".localized
+        )
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    let newPrescriptionButton: ButtonHomeViewComponent = {
+        let button = ButtonHomeViewComponent(
+            icon: .pills,
+            title: "home.new.prescription.title".localized,
+            description: "home.new.prescription.subtitle".localized
+        )
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -77,6 +97,8 @@ class HomeView: UIView {
         
         addSubview(contentBackground)
         contentBackground.addSubview(feedbackButton)
+        contentBackground.addSubview(myPrescriptionButton)
+        contentBackground.addSubview(newPrescriptionButton)
         setupConstraints()
         setupImageGesture()
     }
@@ -126,6 +148,16 @@ class HomeView: UIView {
             contentBackground.leadingAnchor.constraint(equalTo: leadingAnchor),
             contentBackground.trailingAnchor.constraint(equalTo: trailingAnchor),
             contentBackground.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            myPrescriptionButton.topAnchor.constraint(equalTo: contentBackground.topAnchor, constant: Metrics.medium),
+            myPrescriptionButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Metrics.medium),
+            myPrescriptionButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Metrics.medium),
+            myPrescriptionButton.heightAnchor.constraint(equalToConstant: Metrics.hugeCard),
+            
+            newPrescriptionButton.topAnchor.constraint(equalTo: myPrescriptionButton.bottomAnchor, constant: Metrics.medium),
+            newPrescriptionButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Metrics.medium),
+            newPrescriptionButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Metrics.medium),
+            newPrescriptionButton.heightAnchor.constraint(equalToConstant: Metrics.hugeCard),
             
             feedbackButton.bottomAnchor.constraint(equalTo: contentBackground.bottomAnchor, constant: -Metrics.medium),
             feedbackButton.leadingAnchor.constraint(equalTo: contentBackground.leadingAnchor, constant: Metrics.medium),
