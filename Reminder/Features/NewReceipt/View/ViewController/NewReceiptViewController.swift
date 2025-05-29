@@ -7,6 +7,7 @@ class NewReceiptViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        setupActions()
     }
     
     private func setupView() {
@@ -14,6 +15,15 @@ class NewReceiptViewController: UIViewController {
         view.addSubview(newReceiptView)
         
         setupConstraints()
+    }
+    
+    private func setupActions() {
+        newReceiptView.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc
+    private func backButtonTapped() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     private func setupConstraints() {

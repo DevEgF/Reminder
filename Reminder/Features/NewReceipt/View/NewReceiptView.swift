@@ -44,7 +44,7 @@ class NewReceiptView: UIView {
     let remedyInput = Input(title: "Remédio", placeHolder: "Nome do medicamento")
     let timeInput = Input(title: "Horário", placeHolder: "00:00")
     let recurrenceInput = Input(title: "Recorrência", placeHolder: "Selecione")
-//    let takeNowCheckbox
+    let takeNowCheckbox = Checkbox(title: "Tomar agora")
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -63,13 +63,14 @@ class NewReceiptView: UIView {
         addSubview(remedyInput)
         addSubview(timeInput)
         addSubview(recurrenceInput)
+        addSubview(takeNowCheckbox)
         
         setupConstraints()
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            backButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: -Metrics.small),
+            backButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: Metrics.small),
             backButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Metrics.high),
             backButton.heightAnchor.constraint(equalToConstant: 24),
             backButton.heightAnchor.constraint(equalToConstant: 24),
@@ -92,6 +93,10 @@ class NewReceiptView: UIView {
             recurrenceInput.topAnchor.constraint(equalTo: timeInput.bottomAnchor, constant: Metrics.medium),
             recurrenceInput.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Metrics.high),
             recurrenceInput.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Metrics.high),
+            
+            takeNowCheckbox.topAnchor.constraint(equalTo: recurrenceInput.bottomAnchor, constant: Metrics.medium),
+            takeNowCheckbox.leadingAnchor.constraint(equalTo: recurrenceInput.leadingAnchor),
+            takeNowCheckbox.trailingAnchor.constraint(equalTo: recurrenceInput.trailingAnchor),
             
             addButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Metrics.high),
             addButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Metrics.high),

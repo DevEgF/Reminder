@@ -3,6 +3,8 @@ import UIKit
 
 class ButtonHomeViewComponent: UIView {
     
+    var tapAction: (() -> Void)?
+    
     private let iconView: UIView = {
         let view = UIView()
         view.backgroundColor = Colors.gray600
@@ -53,6 +55,7 @@ class ButtonHomeViewComponent: UIView {
         titleLabel.text = title
         descriptionLabel.text = description
         
+        setupGesture()
         setupUI()
     }
     
@@ -102,5 +105,16 @@ class ButtonHomeViewComponent: UIView {
             arrowImageView.widthAnchor.constraint(equalToConstant: 16),
             arrowImageView.heightAnchor.constraint(equalToConstant: 16),
         ])
+    }
+    
+    private func setupGesture() {
+        let tagGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        self.addGestureRecognizer(tagGesture)
+        self.isUserInteractionEnabled = true
+        
+    }
+    
+    @objc private func handleTap() {
+        tapAction?()
     }
 }
